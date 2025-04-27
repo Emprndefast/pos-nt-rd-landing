@@ -282,7 +282,8 @@
                             <li><i class="fas fa-check text-success me-2"></i>1 usuario</li>
                             <li><i class="fas fa-check text-success me-2"></i>Soporte por email</li>
                         </ul>
-                        <a href="#" class="btn btn-outline-primary w-100">Comenzar Gratis</a>
+                        <a href="#" class="btn btn-outline-primary w-100 ver-mas-btn" data-plan="gratis">Comenzar Gratis</a>
+                        <div class="paypal-plan-container" id="paypal-gratis"></div>
                     </div>
                 </div>
                 <!-- Plan Básico -->
@@ -302,7 +303,8 @@
                             <li><i class="fas fa-times text-danger me-2"></i>Datos de factura genéricos</li>
                             <li><i class="fas fa-check text-success me-2"></i>Soporte prioritario</li>
                         </ul>
-                        <a href="#" class="btn btn-outline-primary w-100">Ver más</a>
+                        <a href="#" class="btn btn-outline-primary w-100 ver-mas-btn" data-plan="basico">Ver más</a>
+                        <div class="paypal-plan-container" id="paypal-basico"></div>
                     </div>
                 </div>
                 <!-- Plan Profesional (popular) -->
@@ -323,7 +325,8 @@
                             <li><i class="fas fa-check text-success me-2"></i>Reportes avanzados</li>
                             <li><i class="fas fa-check text-success me-2"></i>Soporte 24/7</li>
                         </ul>
-                        <a href="#" class="btn btn-outline-primary w-100">Ver más</a>
+                        <a href="#" class="btn btn-outline-primary w-100 ver-mas-btn" data-plan="profesional">Ver más</a>
+                        <div class="paypal-plan-container" id="paypal-profesional"></div>
                     </div>
                 </div>
                 <!-- Plan Empresarial -->
@@ -343,12 +346,11 @@
                             <li><i class="fas fa-check text-success me-2"></i>Reportes y analítica avanzada</li>
                             <li><i class="fas fa-check text-success me-2"></i>Soporte dedicado y personalizado</li>
                         </ul>
-                        <a href="#" class="btn btn-outline-primary w-100">Ver más</a>
+                        <a href="#" class="btn btn-outline-primary w-100 ver-mas-btn" data-plan="empresarial">Ver más</a>
+                        <div class="paypal-plan-container" id="paypal-empresarial"></div>
                     </div>
                 </div>
             </div>
-            <!-- Eliminar la barra del contenedor y el selector de plan para pagar, dejar solo el botón de PayPal -->
-            <div id="paypal-button-container"></div>
         </div>
     </section>
 
@@ -596,6 +598,46 @@
                 });
             }
             updatePlanPricesUnified(currentCurrency);
+        });
+
+        // Configuración de montos para cada plan (en USD)
+        const planPayPal = {
+            gratis: { id: null, amount: '0' },
+            basico: { id: 'R9AUWJE3LPB4J', amount: '17' },
+            profesional: { id: '4YT6DN8ENNZEG', amount: '34' },
+            empresarial: { id: 'M3BQWFCN9ELSQ', amount: '55' }
+        };
+
+        // Función para mostrar el botón de PayPal solo en el plan seleccionado
+        function mostrarPayPal(plan) {
+            // Ocultar todos los contenedores
+            document.querySelectorAll('.paypal-plan-container').forEach(div => div.innerHTML = '');
+            if (!planPayPal[plan].id) return;
+            // Renderizar el botón de PayPal en el contenedor correspondiente
+            paypal.HostedButtons({
+                hostedButtonId: planPayPal[plan].id
+            }).render(`#paypal-${plan}`);
+        }
+
+        // Asignar evento a los botones 'Ver más'
+        document.querySelectorAll('.ver-mas-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const plan = this.getAttribute('data-plan');
+                const container = document.getElementById(`paypal-${plan}`);
+                // Si ya está visible, ocultar (toggle)
+                if (container.innerHTML.trim() !== '') {
+                    container.innerHTML = '';
+                    return;
+                }
+                // Ocultar todos los contenedores
+                document.querySelectorAll('.paypal-plan-container').forEach(div => div.innerHTML = '');
+                if (!planPayPal[plan].id) return;
+                // Renderizar el botón de PayPal en el contenedor correspondiente
+                paypal.HostedButtons({
+                    hostedButtonId: planPayPal[plan].id
+                }).render(`#paypal-${plan}`);
+            });
         });
     </script>
 </body>
