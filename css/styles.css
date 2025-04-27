@@ -134,9 +134,7 @@ body {
 }
 
 .pricing-card {
-    position: relative;
-    text-align: center;
-    padding: 3rem 2rem;
+    padding: 0.7rem 0.1rem !important;
     border-radius: 16px;
     background: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -146,6 +144,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    margin: 0 !important;
 }
 
 .pricing-card:hover {
@@ -193,8 +192,8 @@ body {
 }
 
 .pricing-header {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
+    margin-bottom: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
     border-bottom: 2px solid #eef2ff;
 }
 
@@ -237,16 +236,13 @@ body {
 }
 
 .features-list {
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0;
-    text-align: left;
-    flex-grow: 1;
+    margin: 0.5rem 0 !important;
+    padding: 0 !important;
 }
 
 .features-list li {
-    margin: 1rem 0;
-    padding: 0.5rem 0;
+    margin: 0.2rem 0 !important;
+    padding: 0.1rem 0 !important;
     display: flex;
     align-items: center;
     color: var(--dark-color);
@@ -568,4 +564,21 @@ nav {
     .contact-form {
         padding: 1.5rem;
     }
+}
+
+/* Selector de planes para PayPal */
+#planSelector {
+    min-width: 180px;
+    display: inline-block;
+    margin-left: 8px;
+}
+
+/* Contenedor del botón de PayPal */
+#paypal-button-container {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto 2rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 } 
