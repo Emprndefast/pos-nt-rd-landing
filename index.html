@@ -283,7 +283,7 @@
                             <li><i class="fas fa-check text-success me-2"></i>Soporte por email</li>
                         </ul>
                         <a href="#" class="btn btn-outline-primary w-100 ver-mas-btn" data-plan="gratis">Comenzar Gratis</a>
-                        <div class="paypal-plan-container" id="paypal-gratis"></div>
+                        <div class="paypal-buttons-group d-none" id="paypal-buttons-gratis"></div>
                     </div>
                 </div>
                 <!-- Plan Básico -->
@@ -303,8 +303,18 @@
                             <li><i class="fas fa-times text-danger me-2"></i>Datos de factura genéricos</li>
                             <li><i class="fas fa-check text-success me-2"></i>Soporte prioritario</li>
                         </ul>
-                        <a href="#" class="btn btn-outline-primary w-100 ver-mas-btn" data-plan="basico">Ver más</a>
-                        <div class="paypal-plan-container" id="paypal-basico"></div>
+                        <div class="billing-toggle-wrapper text-center mb-3">
+                            <div class="btn-group billing-toggle" role="group" aria-label="Toggle pago mensual/anual">
+                                <button type="button" class="btn btn-outline-primary active" onclick="mostrarSoloModoPlan('basico','mensual', this)">Pago mensual</button>
+                                <button type="button" class="btn btn-outline-primary" onclick="mostrarSoloModoPlan('basico','anual', this)">Pago anual <span class="badge bg-secondary ms-1">20% OFF</span></button>
+                            </div>
+                        </div>
+                        <div class="paypal-botones">
+                            <div class="paypal-mensual" id="paypal-container-R9AUWJE3LPB4J"></div>
+                            <div class="paypal-anual d-none" id="paypal-container-SWWLZ8E3U7QWC"></div>
+                        </div>
+                        <script>paypal.HostedButtons({hostedButtonId: "R9AUWJE3LPB4J"}).render("#paypal-container-R9AUWJE3LPB4J")</script>
+                        <script>paypal.HostedButtons({hostedButtonId: "SWWLZ8E3U7QWC"}).render("#paypal-container-SWWLZ8E3U7QWC")</script>
                     </div>
                 </div>
                 <!-- Plan Profesional (popular) -->
@@ -325,8 +335,18 @@
                             <li><i class="fas fa-check text-success me-2"></i>Reportes avanzados</li>
                             <li><i class="fas fa-check text-success me-2"></i>Soporte 24/7</li>
                         </ul>
-                        <a href="#" class="btn btn-outline-primary w-100 ver-mas-btn" data-plan="profesional">Ver más</a>
-                        <div class="paypal-plan-container" id="paypal-profesional"></div>
+                        <div class="billing-toggle-wrapper text-center mb-3">
+                            <div class="btn-group billing-toggle" role="group" aria-label="Toggle pago mensual/anual">
+                                <button type="button" class="btn btn-outline-primary active" onclick="mostrarSoloModoPlan('profesional','mensual', this)">Pago mensual</button>
+                                <button type="button" class="btn btn-outline-primary" onclick="mostrarSoloModoPlan('profesional','anual', this)">Pago anual <span class="badge bg-secondary ms-1">20% OFF</span></button>
+                            </div>
+                        </div>
+                        <div class="paypal-botones">
+                            <div class="paypal-mensual" id="paypal-container-4YT6DN8ENNZEG"></div>
+                            <div class="paypal-anual d-none" id="paypal-container-QQ57DZS3HXGA2"></div>
+                        </div>
+                        <script>paypal.HostedButtons({hostedButtonId: "4YT6DN8ENNZEG"}).render("#paypal-container-4YT6DN8ENNZEG")</script>
+                        <script>paypal.HostedButtons({hostedButtonId: "QQ57DZS3HXGA2"}).render("#paypal-container-QQ57DZS3HXGA2")</script>
                     </div>
                 </div>
                 <!-- Plan Empresarial -->
@@ -346,8 +366,18 @@
                             <li><i class="fas fa-check text-success me-2"></i>Reportes y analítica avanzada</li>
                             <li><i class="fas fa-check text-success me-2"></i>Soporte dedicado y personalizado</li>
                         </ul>
-                        <a href="#" class="btn btn-outline-primary w-100 ver-mas-btn" data-plan="empresarial">Ver más</a>
-                        <div class="paypal-plan-container" id="paypal-empresarial"></div>
+                        <div class="billing-toggle-wrapper text-center mb-3">
+                            <div class="btn-group billing-toggle" role="group" aria-label="Toggle pago mensual/anual">
+                                <button type="button" class="btn btn-outline-primary active" onclick="mostrarSoloModoPlan('empresarial','mensual', this)">Pago mensual</button>
+                                <button type="button" class="btn btn-outline-primary" onclick="mostrarSoloModoPlan('empresarial','anual', this)">Pago anual <span class="badge bg-secondary ms-1">20% OFF</span></button>
+                            </div>
+                        </div>
+                        <div class="paypal-botones">
+                            <div class="paypal-mensual" id="paypal-container-M3BQWFCN9ELSQ"></div>
+                            <div class="paypal-anual d-none" id="paypal-container-KEBPY8STHKJUY"></div>
+                        </div>
+                        <script>paypal.HostedButtons({hostedButtonId: "M3BQWFCN9ELSQ"}).render("#paypal-container-M3BQWFCN9ELSQ")</script>
+                        <script>paypal.HostedButtons({hostedButtonId: "KEBPY8STHKJUY"}).render("#paypal-container-KEBPY8STHKJUY")</script>
                     </div>
                 </div>
             </div>
@@ -611,12 +641,12 @@
         // Función para mostrar el botón de PayPal solo en el plan seleccionado
         function mostrarPayPal(plan) {
             // Ocultar todos los contenedores
-            document.querySelectorAll('.paypal-plan-container').forEach(div => div.innerHTML = '');
+            document.querySelectorAll('.paypal-buttons-group').forEach(div => div.classList.add('d-none'));
             if (!planPayPal[plan].id) return;
             // Renderizar el botón de PayPal en el contenedor correspondiente
             paypal.HostedButtons({
                 hostedButtonId: planPayPal[plan].id
-            }).render(`#paypal-${plan}`);
+            }).render(`#paypal-buttons-${plan}`);
         }
 
         // Asignar evento a los botones 'Ver más'
@@ -624,21 +654,135 @@
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const plan = this.getAttribute('data-plan');
-                const container = document.getElementById(`paypal-${plan}`);
+                const group = document.getElementById(`paypal-buttons-${plan}`);
                 // Si ya está visible, ocultar (toggle)
-                if (container.innerHTML.trim() !== '') {
-                    container.innerHTML = '';
+                if (!group.classList.contains('d-none')) {
+                    group.classList.add('d-none');
                     return;
                 }
-                // Ocultar todos los contenedores
-                document.querySelectorAll('.paypal-plan-container').forEach(div => div.innerHTML = '');
-                if (!planPayPal[plan].id) return;
-                // Renderizar el botón de PayPal en el contenedor correspondiente
-                paypal.HostedButtons({
-                    hostedButtonId: planPayPal[plan].id
-                }).render(`#paypal-${plan}`);
+                // Ocultar todos los grupos
+                document.querySelectorAll('.paypal-buttons-group').forEach(div => div.classList.add('d-none'));
+                group.classList.remove('d-none');
             });
         });
+
+        function renderPayPalButton(plan, modo) {
+            const containerId = {
+                basico: {
+                    mensual: "paypal-container-R9AUWJE3LPB4J",
+                    anual: "paypal-container-SWWLZ8E3U7QWC"
+                },
+                profesional: {
+                    mensual: "paypal-container-4YT6DN8ENNZEG",
+                    anual: "paypal-container-QQ57DZS3HXGA2"
+                },
+                empresarial: {
+                    mensual: "paypal-container-M3BQWFCN9ELSQ",
+                    anual: "paypal-container-KEBPY8STHKJUY"
+                }
+            };
+            const id = paypalIds[plan][modo];
+            const divId = containerId[plan][modo];
+            const div = document.getElementById(divId);
+            // Solo renderizar si el contenedor está vacío
+            if (div && div.childElementCount === 0 && window.paypal && id) {
+                window.paypal.HostedButtons({
+                    hostedButtonId: id
+                }).render(`#${divId}`);
+            }
+        }
+
+        function mostrarBotonPayPalModo() {
+            const isAnnual = document.getElementById('annualBtn')?.classList.contains('active');
+            document.querySelectorAll('.paypal-buttons-group').forEach(group => {
+                const mensual = group.querySelector('.paypal-paypal-mensual');
+                const anual = group.querySelector('.paypal-paypal-anual');
+                if (isAnnual) {
+                    mensual.classList.add('d-none');
+                    anual.classList.remove('d-none');
+                } else {
+                    mensual.classList.remove('d-none');
+                    anual.classList.add('d-none');
+                }
+            });
+            // Renderizar el botón visible si hay algún grupo abierto
+            document.querySelectorAll('.paypal-buttons-group').forEach(group => {
+                if (!group.classList.contains('d-none')) {
+                    const plan = group.id.replace('paypal-buttons-', '');
+                    renderPayPalButton(plan, isAnnual ? 'anual' : 'mensual');
+                }
+            });
+        }
+        document.getElementById('monthlyBtn')?.addEventListener('click', mostrarBotonPayPalModo);
+        document.getElementById('annualBtn')?.addEventListener('click', mostrarBotonPayPalModo);
+
+        function mostrarSoloModo(modo) {
+            document.querySelectorAll('.paypal-botones').forEach(grupo => {
+                const mensual = grupo.querySelector('.paypal-mensual');
+                const anual = grupo.querySelector('.paypal-anual');
+                if (modo === 'anual') {
+                    mensual.classList.add('d-none');
+                    anual.classList.remove('d-none');
+                } else {
+                    mensual.classList.remove('d-none');
+                    anual.classList.add('d-none');
+                }
+            });
+        }
+        document.getElementById('monthlyBtn')?.addEventListener('click', () => mostrarSoloModo('mensual'));
+        document.getElementById('annualBtn')?.addEventListener('click', () => mostrarSoloModo('anual'));
+        // Mostrar mensual por defecto al cargar
+        mostrarSoloModo('mensual');
+
+        // Sincronización de selectores global e individuales
+        function setModoGlobal(modo) {
+            // Cambia el estado de todos los selectores individuales
+            document.querySelectorAll('.billing-toggle').forEach(grupo => {
+                const btns = grupo.querySelectorAll('button');
+                btns.forEach(b => b.classList.remove('active'));
+                if (modo === 'anual') {
+                    btns[1].classList.add('active');
+                } else {
+                    btns[0].classList.add('active');
+                }
+            });
+            // Cambia la visibilidad de todos los botones PayPal
+            document.querySelectorAll('.paypal-botones').forEach(grupo => {
+                const mensual = grupo.querySelector('.paypal-mensual');
+                const anual = grupo.querySelector('.paypal-anual');
+                if (modo === 'anual') {
+                    mensual.classList.add('d-none');
+                    anual.classList.remove('d-none');
+                } else {
+                    mensual.classList.remove('d-none');
+                    anual.classList.add('d-none');
+                }
+            });
+        }
+
+        // Eventos para el selector global
+        const monthlyBtnGlobal = document.getElementById('monthlyBtn');
+        const annualBtnGlobal = document.getElementById('annualBtn');
+        if (monthlyBtnGlobal && annualBtnGlobal) {
+            monthlyBtnGlobal.addEventListener('click', function() {
+                setModoGlobal('mensual');
+                monthlyBtnGlobal.classList.add('active');
+                annualBtnGlobal.classList.remove('active');
+            });
+            annualBtnGlobal.addEventListener('click', function() {
+                setModoGlobal('anual');
+                annualBtnGlobal.classList.add('active');
+                monthlyBtnGlobal.classList.remove('active');
+            });
+        }
+
+        // Eventos para los selectores individuales
+        function mostrarSoloModoPlan(plan, modo, btn) {
+            setModoGlobal(modo); // Sincroniza todos los selectores
+        }
+
+        // Al cargar, mostrar mensual por defecto en todos
+        setModoGlobal('mensual');
     </script>
 </body>
 </html> 
